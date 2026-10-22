@@ -1,0 +1,27 @@
+# build outputs
+build/
+_build/
+*.o
+*.obj
+*.a
+*.so
+*.exe
+*.out
+
+# downloaded benchmark sources (fetched by script, never committed)
+benchmarks/
+third_party/
+
+# large raw data
+results/raw/*.bin
+results/raw/*.zst
+
+# editors and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# secrets
+.env
+*.pem
