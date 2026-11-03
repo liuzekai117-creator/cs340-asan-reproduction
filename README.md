@@ -52,7 +52,8 @@ the original setting, the setting used, and the reason.
 - Benchmarks: downloaded by script and not redistributed in this repository.
 
 ## Team
-
-| Name | Student ID | GitHub |
-|------|------------|--------|
-| Liu Zekai | 1240002302 | TBD |
+| Name      | Student ID  | GitHub Account      |
+|-----------|-------------|---------------------|
+| Liu Zekai | 1240002302  | liuzekai117-creator |
+| Lin Xiyao |  1240001933 | linxiyao111         |
+| Liu Fangzhuo|1240002384 | liufangzhuo272      |
