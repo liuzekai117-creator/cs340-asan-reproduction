@@ -57,3 +57,41 @@ the original setting, the setting used, and the reason.
 | Liu Zekai | 1240002302  | liuzekai117-creator |
 | Lin Xiyao |  1240001933 | linxiyao111         |
 | Liu Fangzhuo|1240002384 | liufangzhuo272      |
+
+## ASan environment smoke test
+
+Verified on Ubuntu 24.04.5 under WSL2 with Clang 18.1.3.
+See results/environment.txt for the recorded environment.
+
+Install dependencies:
+
+```bash
+sudo apt update
+sudo apt install -y clang-18 libclang-rt-18-dev llvm-18 \
+  build-essential cmake git python3 time
+```
+
+Run from the repository root:
+
+```bash
+bash scripts/check_asan.sh
+```
+
+Expected output:
+
+```text
+PASS: ASan detected the intentional heap-use-after-free.
+Log: results/asan_check.log
+```
+
+The script compiles tests/asan_check.c and verifies that ASan reports
+the intentional heap-use-after-free with a nonzero exit status.
+The full diagnostic is saved to results/asan_check.log.
+The check normally takes a few seconds after dependencies are installed.
+
+This is an environment smoke test, not a performance benchmark or
+evidence that the paper's quantitative claims have been reproduced.
+The main experiment runner is still a skeleton.
+
+The smoke-test source, script, and documentation were prepared with
+ChatGPT assistance and executed and checked by a team member.
