@@ -1,0 +1,9 @@
+run,variant,elapsed_seconds,max_rss_KiB,exit_status,user_seconds,system_seconds,major_faults,minor_faults,voluntary_switches,involuntary_switches
+1,baseline,2.00,7700,0,2.18,0.00,0,1694,1,8
+1,asan,3.27,14848,0,3.55,0.01,0,5893,3,11
+2,asan,3.18,14936,0,3.46,0.00,0,5892,4,12
+2,baseline,1.99,7700,0,2.17,0.00,0,1694,0,5
+3,baseline,1.98,7700,0,2.16,0.00,0,1694,1,6
+3,asan,3.27,14724,0,3.56,0.00,0,5893,3,14
+4,asan,3.27,14972,0,3.54,0.01,0,5898,2,11
+4,baseline,2.03,7700,0,2.21,0.00,0,1695,0,6

@@ -1,19 +1,24 @@
-# Environment
+# Recorded experiment environment
 
-Recorded with scripts/setup_env.sh for every experiment batch.
+- CPU model: Intel Core i7-14700KF.
+- WSL-visible logical CPUs: 28.
+- WSL-visible memory: approximately 15 GiB.
+- Guest OS: Ubuntu 24.04.5 LTS.
+- Kernel: 6.18.58.1-microsoft-standard-WSL2.
+- Compiler: Ubuntu Clang 18.1.3.
+- glibc: 2.39.
 
-| Item | Value |
-|------|-------|
-| CPU | Intel Core i7-14700KF (8 P-cores + 12 E-cores, 28 threads) |
-| Memory | 32 GB |
-| Host OS | Windows 10 Pro 25H2 (build 26200) |
-| Guest OS | Ubuntu 24.04 (WSL2) |
-| Kernel | TBD (uname -r) |
-| clang | TBD (clang --version) |
-| glibc | TBD (ldd --version) |
+Full package versions and hardware output are in results/environment.txt.
+Additional environment snapshots are stored as results/env-*.txt.
+Exact Windows edition and version remain to be verified.
 
-Notes:
+Experiments are not CPU-pinned. No performance-governor setting was
+applied by the experiment scripts. The virtual CPU topology reported
+inside WSL does not establish the mapping to physical P-cores/E-cores.
 
-- Experiments are pinned to the P-cores with taskset -c 0-15 so that the hybrid
-  core layout does not enter the measurements.
-- The CPU governor is set to performance before every measurement batch.
+WSL mirrored networking was enabled for access to the Windows proxy.
+The proxy is used for downloads and Git access, not the local
+compression workload.
+
+Versions are recorded; a fully pinned installation environment has
+not yet been implemented.

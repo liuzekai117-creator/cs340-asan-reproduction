@@ -1,11 +1,16 @@
-#!/bin/bash
-# Run ASan experiment script
-# Compile benchmarks with AddressSanitizer and run tests
-# TODO: add compilation, execution, log collection
+#!/usr/bin/env bash
+# Build, generate input, measure, and summarize.
+set -euo pipefail
 
-BENCHMARK_DIR="../benchmarks"
-RESULT_DIR="../results"
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$ROOT"
 
-echo "Starting ASan experiment..."
-echo "Benchmark source: ${BENCHMARK_DIR}"
-echo "Output results to: ${RESULT_DIR}"
+bash scripts/build_bzip2.sh
+python3 scripts/generate_input.py
+bash scripts/measure_bzip2.sh
+
+shopt -s nullglob
+files=(results/bzip2-run-*/measurements.csv)
+python3 scripts/summarize_bzip2.py "${files[@]}"
+
+echo "PASS: experiment completed. See results/bzip2-run-*/summary.md"

@@ -16,7 +16,7 @@ Paper: https://www.usenix.org/system/files/conference/atc12/atc12-final39.pdf
 
 ## Status
 
-Week 1: repository setup, environment pinning, benchmark selection.
+Environment smoke test and initial bzip2 measurement pipeline implemented. Three measurement batches and one diagnostic batch recorded; timing variability remains under investigation.
 
 ## Requirements
 
@@ -26,7 +26,7 @@ Week 1: repository setup, environment pinning, benchmark selection.
 ## Quick start
 
     bash scripts/setup_env.sh        # record toolchain and hardware versions
-    bash scripts/run_experiment.sh   # baseline vs ASan, 3 repetitions
+    bash scripts/run_experiment.sh   # bzip2 baseline vs ASan, 4 repetitions per variant
 
 ## Repository layout
 
@@ -91,7 +91,47 @@ The check normally takes a few seconds after dependencies are installed.
 
 This is an environment smoke test, not a performance benchmark or
 evidence that the paper's quantitative claims have been reproduced.
-The main experiment runner is still a skeleton.
+The main experiment runner executes the initial bzip2 workload.
 
 The smoke-test source, script, and documentation were prepared with
 ChatGPT assistance and executed and checked by a team member.
+
+## Initial bzip2 performance experiment
+
+Prerequisites: the dependencies listed in the ASan smoke-test section,
+plus curl for downloading the upstream source:
+
+```bash
+sudo apt install -y curl
+```
+
+From the repository root, run:
+
+```bash
+bash scripts/run_experiment.sh
+```
+
+This downloads and verifies bzip2 1.0.8, builds baseline and ASan
+variants, runs upstream tests, generates a deterministic 32 MiB input,
+warms up both variants, and measures four runs per variant in
+alternating order. Compression uses -9; timed output goes to /dev/null.
+
+Allow a few minutes, excluding dependency installation and download.
+Each measurement invocation creates a new results/bzip2-run-* directory.
+It contains settings.txt, measurements.csv, stderr logs, and summary.md.
+Summary tables report mean and sample standard deviation.
+
+To collect additional diagnostic counters:
+
+```bash
+bash scripts/diagnose_bzip2.sh
+python3 scripts/summarize_bzip2.py results/bzip2-diagnostic-*/measurements.csv
+```
+
+See docs/bzip2-experiment.md for methodology and limitations.
+All batches, including unusually slow observations, are retained.
+This workload is not SPEC CPU2006, and maximum RSS is not VmPeak.
+
+Source archives, generated inputs and compiled binaries remain in
+ignored third_party/ and build/ directories. The source download
+retains the upstream LICENSE; no upstream source files are modified.

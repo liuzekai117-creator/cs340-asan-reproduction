@@ -1,0 +1,3 @@
+elapsed_seconds=3.28
+max_rss_KiB=14880
+exit_status=0

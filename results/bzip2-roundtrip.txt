@@ -1,0 +1,1 @@
+PASS: both compressed files restore the original input.
