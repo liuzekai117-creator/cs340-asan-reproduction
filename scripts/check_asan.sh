@@ -4,9 +4,12 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
+source "$ROOT/scripts/common.sh"
+
+CLANG_BIN="$(clang_bin)"
 mkdir -p build results
 
-clang-18 -O0 -g -fsanitize=address -fno-omit-frame-pointer \
+"$CLANG_BIN" -O0 -g -fsanitize=address -fno-omit-frame-pointer \
   tests/asan_check.c -o build/asan_check
 
 status=0

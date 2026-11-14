@@ -13,8 +13,8 @@ results/bzip2-input.txt. Compression uses -9 -c.
 Each measured batch includes one excluded warmup per variant and
 four measured runs per variant. Order alternates by round.
 Compressed output is discarded through /dev/null during measurement.
-CPU affinity is not pinned. ASan environment overrides and binary
-hashes are recorded in each batch's settings.txt.
+CPU affinity is not pinned. ASan environment overrides, the selected
+compiler and binary hashes are recorded in each batch's settings.txt.
 
 ## Measurements and observations
 GNU time records wall-clock seconds and maximum resident set size
@@ -37,9 +37,14 @@ the VmPeak metric used in the paper. Compiler, hardware, runtime
 settings and operating environment also differ.
 
 These results establish a working measurement pipeline and show
-ASan overhead for this workload. They do not establish reproduction
+ASan overhead for this workload: 1.61x to 1.62x on the two clean
+batches, with single unexplained slow runs raising two earlier
+batches to 1.98x and 2.16x. They do not establish reproduction
 of the paper's aggregate numerical claims. That verdict remains
-inconclusive. The cause of timing variability remains unresolved.
+inconclusive, and the cause of timing variability remains unresolved.
+
+The per-batch table is repeated in the README section "Results at a
+glance" so that the outcome is visible without opening this file.
 
 ## Provenance and assistance
 Upstream: https://sourceware.org/pub/bzip2/bzip2-1.0.8.tar.gz
@@ -47,18 +52,6 @@ The source archive checksum is pinned in scripts/fetch_bzip2.sh.
 The upstream LICENSE is retained in the extracted source.
 Scripts and documentation were prepared with ChatGPT assistance
 and run by Liu Zekai. Raw results are retained for review.
-
-## End-to-end entry-point verification
-The complete README workflow passed after integration.
-Its additional batch is identified in results/pipeline-check.log.
-For that batch, baseline elapsed time was 1.9900 +/- 0.0082 seconds
-and ASan elapsed time was 3.2000 +/- 0.0231 seconds (sample SD).
-The ratio of means was 1.6080. This validation batch is retained
-alongside the earlier batches, not used to replace them.
-
-Both pilot compressed files were decompressed and compared with the
-original input successfully; see results/bzip2-roundtrip.txt.
-A copy of the upstream license is in docs/licenses/bzip2-LICENSE.
 
 ## End-to-end entry-point verification
 The complete README workflow passed after integration.

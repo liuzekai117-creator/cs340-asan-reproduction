@@ -4,6 +4,9 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
+source "$ROOT/scripts/common.sh"
+
+CLANG_BIN="$(clang_bin)"
 
 bash scripts/fetch_bzip2.sh
 mkdir -p build results
@@ -25,12 +28,12 @@ for variant in baseline asan; do
 
   (
     set -e
-    echo "Compiler: clang-18"
-    clang-18 --version
+    echo "Compiler: $CLANG_BIN"
+    "$CLANG_BIN" --version
     echo "CFLAGS: $FLAGS"
     make -C "$DIR" clean
-    make -C "$DIR" -j2 CC=clang-18 CFLAGS="$FLAGS" bzip2
-    make -C "$DIR" CC=clang-18 CFLAGS="$FLAGS" test
+    make -C "$DIR" -j2 CC="$CLANG_BIN" CFLAGS="$FLAGS" bzip2
+    make -C "$DIR" CC="$CLANG_BIN" CFLAGS="$FLAGS" test
   ) > "$LOG" 2>&1 || {
     echo "FAIL: $variant; see $LOG"
     tail -n 40 "$LOG"

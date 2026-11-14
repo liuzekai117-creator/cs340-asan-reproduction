@@ -3,7 +3,10 @@
 # The report is written to results/env-<timestamp>.txt and is safe to commit.
 set -euo pipefail
 
-ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+source "$ROOT/scripts/common.sh"
+
+CLANG_BIN="$(clang_bin)"
 STAMP="$(date +%Y%m%d-%H%M%S)"
 REPORT="$ROOT/results/env-$STAMP.txt"
 mkdir -p "$ROOT/results"
@@ -16,7 +19,8 @@ mkdir -p "$ROOT/results"
   echo "cpu:          $(grep -m1 'model name' /proc/cpuinfo | cut -d: -f2- | xargs)"
   echo "threads:      $(nproc)"
   echo "memory:       $(free -h | awk '/^Mem:/{print $2}')"
-  echo "clang:        $(clang-18 --version | head -n1)"
+  echo "clang:        $("$CLANG_BIN" --version | head -n1)"
+  echo "clang_path:   $CLANG_BIN"
   echo "gcc:          $(gcc --version | head -n1)"
   echo "glibc:        $(ldd --version | head -n1)"
   echo "governor:     $(cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor 2>/dev/null || echo unknown)"

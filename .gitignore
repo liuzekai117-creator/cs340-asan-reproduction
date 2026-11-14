@@ -16,6 +16,9 @@ third_party/
 results/raw/*.bin
 results/raw/*.zst
 
+# batch pointer written by scripts/measure_bzip2.sh
+results/.last-batch
+
 # editors and OS files
 .vscode/
 .idea/

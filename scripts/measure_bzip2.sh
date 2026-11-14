@@ -4,8 +4,12 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 export LC_ALL=C
+source "$ROOT/scripts/common.sh"
+
+CLANG_BIN="$(clang_bin)"
 
 BATCH="$(mktemp -d "$ROOT/results/bzip2-run-XXXXXXXX")"
+printf '%s\n' "$BATCH" > "$ROOT/results/.last-batch"
 INPUT="build/input-32MiB.bin"
 
 {
@@ -19,7 +23,7 @@ INPUT="build/input-32MiB.bin"
   echo "ASAN_OPTIONS=${ASAN_OPTIONS-<unset>}"
   echo "LSAN_OPTIONS=${LSAN_OPTIONS-<unset>}"
   uname -r
-  clang-18 --version
+  "$CLANG_BIN" --version
   sha256sum "$INPUT" build/bzip2-{baseline,asan}/bzip2
 } > "$BATCH/settings.txt"
 
