@@ -1,0 +1,9 @@
+batch,metric,unit,n_per_variant,baseline_mean,baseline_sample_sd,asan_mean,asan_sample_sd,ratio_of_means
+bzip2-run-0lXaeOE4,elapsed_seconds,s,4,1.9975,0.0222,3.9625,1.4721,1.9837
+bzip2-run-0lXaeOE4,max_rss_KiB,KiB,4,7700.0000,0.0000,14819.0000,146.8015,1.9245
+bzip2-run-NVdQw6zH,elapsed_seconds,s,4,1.9900,0.0283,4.2950,2.1701,2.1583
+bzip2-run-NVdQw6zH,max_rss_KiB,KiB,4,7700.0000,0.0000,14984.0000,58.8784,1.9460
+bzip2-diagnostic-MDul3KA8,elapsed_seconds,s,4,2.0000,0.0216,3.2475,0.0450,1.6238
+bzip2-diagnostic-MDul3KA8,max_rss_KiB,KiB,4,7700.0000,0.0000,14870.0000,110.3932,1.9312
+bzip2-run-jGdCjfol,elapsed_seconds,s,4,1.9900,0.0082,3.2000,0.0231,1.6080
+bzip2-run-jGdCjfol,max_rss_KiB,KiB,4,7699.0000,2.0000,14872.0000,40.9227,1.9317
