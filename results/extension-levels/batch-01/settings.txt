@@ -1,0 +1,14 @@
+Linux-6.18.57-x86_64-with-glibc2.41
+3.12.14
+f1e253e0d6e77e2f946ea6eb4d286cd74faa5f76
+input: 33554432 bytes, sha256=d3598df30600f4192e4e07e071e2ad27f988f94c6877a0b7a522bebbfe4c6d17
+baseline sha256=dcc1ade0ba508e1e5f03287b46244557227623270cb642399e2cc0a0e86b9a8a
+asan sha256=c6080fb6431cc56cc60aed090f527e9fc1f38f7d94a284e06246eac04f99c79b
+ASAN_OPTIONS=detect_leaks=0
+LSAN_OPTIONS=<unset>
+host: Debian GNU/Linux 13, execution sandbox
+cpu: INTEL(R) XEON(R) PLATINUM 8573C
+compiler: gcc (Debian 14.2.0-19) 14.2.0
+source: bzip2-1.0.8, verified by scripts/fetch_bzip2.sh
+affinity: inherited; no pinning
+clock: Python perf_counter_ns, one subprocess per observation, stdout=/dev/null

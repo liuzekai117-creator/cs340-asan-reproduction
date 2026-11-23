@@ -75,9 +75,9 @@ Ubuntu 24.04:
 
 | Member | Student ID | GitHub | Contribution |
 |--------|------------|--------|--------------|
-| Liu Zekai | 1240002302 | liuzekai117-creator | Repository layout and planning documents; ASan environment smoke test and environment recording; bzip2 baseline/ASan measurement pipeline, batch summaries and the deviations log |
+| Liu Zekai | 1240002302 | liuzekai117-creator | Repository layout and planning documents; ASan environment smoke test and environment recording; bzip2 baseline/ASan measurement pipeline, batch summaries, deviations log and compression-level extension (with AI assistance) |
 | Lin Xiyao | 1240001933 | linxiyao111 | Initial directory scaffolding; the run_experiment.sh entry point |
-| Liu Fangzhuo | 1240002384 | liufangzhuo272 | TBD |
+| Liu Fangzhuo | 1240002384 | liufangzhuo272 | Raw-data plots, per-batch statistics and analysis of timing variability (PR #1) |
 
 ## Repository layout
 
@@ -166,3 +166,10 @@ SPEC CPU2006, and maximum RSS is not VmPeak.
 Source archives, generated inputs and compiled binaries remain in ignored
 third_party/ and build/ directories. The source download retains the upstream
 LICENSE; no upstream source files are modified.
+
+## Extension: bzip2 compression level
+
+[Experiment and reproduction instructions](docs/bzip2-level-extension.md)
+compare ASan runtime overhead at levels 1 and 9 on the same input.
+The extension uses its own host and toolchain. Its raw timings, build logs
+and summary are stored under `results/extension-levels/`.

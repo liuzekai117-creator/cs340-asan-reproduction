@@ -4,7 +4,7 @@ Every difference between this reproduction and the paper setup.
 
 | # | Item | Paper setting | Setting used | Reason |
 |---|------|---------------|--------------|--------|
-| 1 | Benchmark suite | SPEC CPU2006 | TBD (open benchmark suite) | SPEC CPU2006 requires a commercial license |
+| 1 | Benchmark suite | SPEC CPU2006 | bzip2 1.0.8 with a deterministic 32 MiB input | SPEC CPU2006 requires a commercial license |
 | 2 | Compiler | LLVM/Clang 3.0 (2012) | clang >= 18 | Current toolchain; the 2012 version is unmaintained |
 | 3 | Machine | 2012 x86-64 server | Intel i7-14700KF, 32 GB, Ubuntu 24.04 on WSL2 | Available hardware |
 | 4 | Repetitions | Averages as reported | 4 repetitions per configuration | Runner setting in scripts/measure_bzip2.sh; every recorded batch uses four |
