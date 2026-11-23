@@ -6,13 +6,20 @@ Operating Systems, Academic Year 2026-2027.
 
 Paper: https://www.usenix.org/system/files/conference/atc12/atc12-final39.pdf
 
+## Report and evidence
+
+See the [independent replay task](docs/independent-replay.md) for the proposed release check.
+Read the [English report (PDF)](report/CS340-ASan-report.pdf) or its
+[editable Word document](report/CS340-ASan-report.docx). The report compares elapsed
+time and peak resident memory, explains two unusually slow observations,
+and tests whether changing the compression level affects ASan overhead.
+
 ## Claims under test
 
-| ID | Claim | Paper evidence |
-|----|-------|----------------|
-| C1 | Average runtime overhead is about 2x | evaluation table on SPEC CPU2006 |
-| C2 | Average memory overhead is about 3x | evaluation table on SPEC CPU2006 |
-| C3 | Memory errors are found in real programs | case studies |
+| ID | Paper result | Local test |
+|---|---|---|
+| C1 | Figure 2, 1.73× average elapsed time on SPEC CPU2006 | Four batches of standalone bzip2 compression |
+| C2 | Table 1, 3.37× suite memory overhead, 2.12× for 401.bzip2, measured using VmPeak | GNU time peak RSS on standalone bzip2 |
 
 ## Results at a glance
 
@@ -31,21 +38,16 @@ Deviations are sample standard deviation over four runs.
 
 Claim status:
 
-- **C1, runtime overhead about 2x: inconclusive.** The two clean batches sit
-  at 1.61x and 1.62x. Two earlier batches each contain a single unexplained
-  slow ASan run, 6.17 s and 7.55 s, which raises their ratios to 1.98x and
-  2.16x. The diagnostic batch did not reproduce the slowdown, and its cause
-  remains unresolved.
-- **C2, memory overhead about 3x: not reproduced as specified.** Measured
-  1.93x. The metric here is maximum RSS, which is neither the paper's VmPeak
-  nor does it account for ASan shadow memory.
-- **C3, memory errors found in real programs: smoke test only.** One
-  intentional heap-use-after-free was detected; see results/asan_check.log.
+- **C1, partially supported.** ASan increased elapsed time in all four
+  batches. Ratios ranged from 1.61× to 2.16×. Two batches each had one
+  slow ASan run (6.17 s and 7.55 s). Two follow-up batches did not show
+  a similar delay. The cause and the suite-wide mean remain unresolved.
+- **C2, inconclusive.** Peak RSS rose by a factor of 1.92–1.95. RSS counts
+  resident pages, including resident shadow pages. The paper measured peak
+  virtual address space, so its ratio cannot be validated by this metric.
 
-The workload is not SPEC CPU2006. These results show that the pipeline
-produces stable measurements on clean batches; they do not establish the
-paper's aggregate numerical claims. Methodology and limitations are in
-docs/bzip2-experiment.md.
+A separate environment smoke test detected an intentional error. See
+[experiment details](docs/bzip2-experiment.md) and [deviations](docs/deviations.md).
 
 ## Requirements
 
@@ -76,7 +78,7 @@ Ubuntu 24.04:
 | Member | Student ID | GitHub | Contribution |
 |--------|------------|--------|--------------|
 | Liu Zekai | 1240002302 | liuzekai117-creator | Repository layout and planning documents; ASan environment smoke test and environment recording; bzip2 baseline/ASan measurement pipeline, batch summaries, deviations log and compression-level extension (with AI assistance) |
-| Lin Xiyao | 1240001933 | linxiyao111 | Initial directory scaffolding; the run_experiment.sh entry point |
+| Lin Xiyao | 1240001933 | linxiyao111 | Added the team roster (adf4cb6), benchmarks and results directories (287cef8, 27258f3), and initial experiment-runner skeleton (f9fdcd7) |
 | Liu Fangzhuo | 1240002384 | liufangzhuo272 | Raw-data plots, per-batch statistics and analysis of timing variability (PR #1) |
 
 ## Repository layout
@@ -89,7 +91,16 @@ Ubuntu 24.04:
 
 ## Environment
 
-See docs/environment.md.
+The measured configuration is recorded in [the environment log](results/environment.txt).
+To check the same Ubuntu packages against an existing installation, run
+`bash scripts/check_recorded_env.sh`. The check reports differences and
+leaves the machine untouched. For a new measurement, keep any differences
+alongside the results. See [environment notes](docs/environment.md).
+
+The starting project commit is `089633c`. The original bzip2 sources are
+unmodified. See [source version and digest](results/bzip2-source.txt) and
+[upstream license](docs/licenses/bzip2-LICENSE). To list every project file
+changed since the start, run `git diff --name-status 089633c HEAD`.
 
 ## Deviations from the paper
 
@@ -98,11 +109,11 @@ the original setting, the setting used, and the reason.
 
 ## Provenance and assistance
 
-Scripts and documentation in this repository were prepared with ChatGPT
-assistance, then executed, checked and corrected by team members. Every number
-in results/ comes from a recorded run in the environment described in
-docs/environment.md; no measurement is generated or estimated. Raw output is
-retained, including observations that remain unexplained.
+The team ran the original Ubuntu/Clang benchmarks and published the logs
+and analysis. ChatGPT/Codex assisted with scripts, troubleshooting, plotting,
+statistics and report drafting. It also executed the compression-level
+extension on the hosted Debian/GCC machine. The two hosts have separate
+settings and logs. Individual roles are recorded above and in the report.
 
 ## Credits and license
 
